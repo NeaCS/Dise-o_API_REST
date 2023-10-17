@@ -21,10 +21,9 @@ const obtenerMedicamentos = async ({ limits = 10, order_by =
   
 
 
- const obtenerPersonal = async ({limits = 9}) => {
-    let consulta = "SELECT * FROM personal LIMIT $1"
-    const { rows: personal } = await pool.query(consulta,
-    [limits])
+ const obtenerPersonal = async ({limits = 9, order_by = "salario", order= "ASC"}) => {
+    let consulta = format('SELECT * FROM personal ORDER BY %s %s LIMIT %s', order_by, order, limits)
+    const { rows: personal } = await pool.query(consulta)
     return personal
  }
     module.exports = {obtenerMedicamentos, obtenerPersonal}
